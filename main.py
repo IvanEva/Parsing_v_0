@@ -1,3 +1,9 @@
+import requests
+from bs4 import BeautifulSoup as bs
+import time
+import matplotlib
+
+
 def get_price():
     URL_TEMPLATE = "https://ru.investing.com/equities/gazprom_rts"
     r = requests.get(URL_TEMPLATE)
@@ -6,10 +12,6 @@ def get_price():
     now_price = now_price[-12:-6]
     return float(now_price.replace(",", "."))
 
-import requests
-from bs4 import BeautifulSoup as bs
-import pandas as pd
-import time
 
 i = 0
 N = int(input('Введите число секунд для отслеживания котировок Газпрома\n'))
@@ -18,9 +20,7 @@ while True:
     a.append(get_price())
     time.sleep(1)
     i += 1
-    print('\rЗаписаны котировки', i, 'раз из', N, end = '')
+    print('\rЗаписаны котировки', i, 'раз из', N, end='')
     if i == N:
         break
 print('\n', a)
-
-
