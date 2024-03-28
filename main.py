@@ -1,16 +1,26 @@
-# This is a sample Python script.
+def get_price():
+    URL_TEMPLATE = "https://ru.investing.com/equities/gazprom_rts"
+    r = requests.get(URL_TEMPLATE)
+    soup = bs(r.text, "html.parser")
+    now_price = str(soup.find(class_='text-5xl/9 font-bold text-[#232526] md:text-[42px] md:leading-[60px]'))
+    now_price = now_price[-12:-6]
+    return float(now_price.replace(",", "."))
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import requests
+from bs4 import BeautifulSoup as bs
+import pandas as pd
+import time
+
+i = 0
+N = int(input('Введите число секунд для отслеживания котировок Газпрома\n'))
+a = []
+while True:
+    a.append(get_price())
+    time.sleep(1)
+    i += 1
+    print('\rЗаписаны котировки', i, 'раз из', N, end = '')
+    if i == N:
+        break
+print('\n', a)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
